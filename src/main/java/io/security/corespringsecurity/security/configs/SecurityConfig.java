@@ -42,6 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http    //인가 정책 시작
                 .authorizeRequests()
+                // 각 사용자별 접근 페이지 각 경로별 권한 부여
+                .antMatchers("/").permitAll() // 루트 페이지 모든 사용자 인증 및 권한 오픈
+                .antMatchers("/mypage").hasRole("USER")
+                .antMatchers("/messages").hasRole("MANAGER")
+                .antMatchers("/config").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
         .and()  //인증 정책 시작
