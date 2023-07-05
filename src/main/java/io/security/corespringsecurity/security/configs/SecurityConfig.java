@@ -1,6 +1,7 @@
 package io.security.corespringsecurity.security.configs;
 
-import com.fasterxml.jackson.core.Base64Variant;
+import io.security.corespringsecurity.security.service.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,23 +19,30 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+//    private UserDetailsService userDetailsService;
+
     /** 정적 리소스파일 보인필터 해제 */
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
-    /** 인메모리 방식 사용자 등록 */
+    /** 사용자 등록 */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         // 암호화된 방식으로 패스워드 부여
 //        String password = passwordEncoder().encode("1234");
 
-        // 사용자 추가
+        // 인메모리방식 사용자 추가
 //        auth.inMemoryAuthentication().withUser("user").password(password).roles("USER");
 //        auth.inMemoryAuthentication().withUser("manager").password(password).roles("MANAGER", "USER");
 //        auth.inMemoryAuthentication().withUser("admin").password(password).roles("ADMIN", "MANAGER", "USER");
+
+//        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(customUserDetailsService); // UserDetailsService 구현체 CustomUserDetails를 사용해서 로그인하게 된다.
     }
 
     /**
