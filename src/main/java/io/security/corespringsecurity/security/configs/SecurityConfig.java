@@ -1,10 +1,12 @@
 package io.security.corespringsecurity.security.configs;
 
 import com.fasterxml.jackson.core.Base64Variant;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /** 인메모리 방식 사용자 등록 */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -23,14 +26,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 사용자 추가
         auth.inMemoryAuthentication().withUser("user").password(password).roles("USER");
-        auth.inMemoryAuthentication().withUser("manager").password(password).roles("MANAGER");
-        auth.inMemoryAuthentication().withUser("admin").password(password).roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("manager").password(password).roles("MANAGER", "USER");
+        auth.inMemoryAuthentication().withUser("admin").password(password).roles("ADMIN", "MANAGER", "USER");
     }
 
     /**
      * 빈 등록 <br/>
      * 패스워드 인코딩 메소드
-     * @return
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
