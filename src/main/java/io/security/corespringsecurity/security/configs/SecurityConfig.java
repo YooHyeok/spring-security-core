@@ -17,6 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /** 정적 리소스파일 보인필터 해제 */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    }
+
     /** 인메모리 방식 사용자 등록 */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
