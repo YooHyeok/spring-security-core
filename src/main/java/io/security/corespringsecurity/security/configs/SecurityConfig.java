@@ -1,10 +1,12 @@
 package io.security.corespringsecurity.security.configs;
 
+import io.security.corespringsecurity.security.provider.CustomAuthenticationProvider;
 import io.security.corespringsecurity.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -42,8 +44,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        auth.inMemoryAuthentication().withUser("admin").password(password).roles("ADMIN", "MANAGER", "USER");
 
 //        auth.userDetailsService(userDetailsService);
-        auth.userDetailsService(customUserDetailsService); // UserDetailsService 구현체 CustomUserDetails를 사용해서 로그인하게 된다.
+//        auth.userDetailsService(customUserDetailsService); // UserDetailsService 구현체 CustomUserDetails를 사용해서 로그인하게 된다.
+        auth.authenticationProvider(authenticationProvider());
     }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        return new CustomAuthenticationProvider();
+    }
+
 
     /**
      * 빈 등록 <br/>

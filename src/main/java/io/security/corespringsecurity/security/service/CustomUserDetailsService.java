@@ -22,7 +22,8 @@ import java.util.List;
  * SpringSecurity는 기본적으로 UserDetailsService를 통해 <br/>
  * 회원 아이디와 권한을 파악하여 로그인 할 수 있다. <br/>
  * 현재 클래스는 User에대한 Entity와 Repository등을 <br/>
- * 직접 만들어서 사용하기 위해 커스터마이징 한 클래스이다.
+ * 직접 만들어서 사용하기 위해 커스터마이징 한 클래스이다. <br/>
+ * 최종적으로 SpringSecurity의 AuthenticationProvider에 의해 검증된다.
  *
  */
 @Service
