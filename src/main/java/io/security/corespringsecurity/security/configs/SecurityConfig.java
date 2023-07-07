@@ -77,8 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
         .and()  //인증 정책 시작
                 .formLogin() // 기본 인증방식 : FORM Login
-                .loginPage("login") //직접 만든 login페이지로 이동
-                .loginProcessingUrl("login_proc")// 로그인을 처리하는 컨트롤러 매핑주소
+                .loginPage("/login") //직접 만든 login페이지로 이동
+                .loginProcessingUrl("/login_proc")// 로그인을 처리하는 컨트롤러 매핑주소
                 .defaultSuccessUrl("/") //성공시 루트페이지로 이동
                 .permitAll();
 
