@@ -1,11 +1,13 @@
 package io.security.corespringsecurity.security.configs;
 
+import io.security.corespringsecurity.security.common.FormAuthenticationDetailsSource;
 import io.security.corespringsecurity.security.provider.CustomAuthenticationProvider;
 import io.security.corespringsecurity.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +23,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private AuthenticationDetailsSource authenticationDetailsSource;
+    //실제 사용시 구현체 FormAuthenticationDetailsSource 객체 주입(반환타입만 인터페이스)
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 //    private UserDetailsService userDetailsService;
@@ -80,6 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login") //직접 만든 login페이지로 이동
                 .loginProcessingUrl("/login_proc")// 로그인을 처리하는 컨트롤러 매핑주소
                 .defaultSuccessUrl("/") //성공시 루트페이지로 이동
+                .authenticationDetailsSource(authenticationDetailsSource)//FormAuthenctiontionDetailsSource객체 주입
                 .permitAll();
 
     }
