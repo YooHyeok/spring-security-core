@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletRequest;
  * 생성자에서 super(request);를 통해 부모클래스의 기본 필드 값을 초기화한다.
  * 이때 상속의 특징에 의해 자식한테도 동일한 필드가 생성되지만, 반환자체를 부모타입으로 하게되면 자식클래스 필드에 접근이 불가능해진다.
  */
-public class FormWebAuthenticationDetails extends WebAuthenticationDetails {
+public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
 
     private String secretKey;
 
-    public FormWebAuthenticationDetails(HttpServletRequest request) {
+    public CustomWebAuthenticationDetails(HttpServletRequest request) {
         super(request);
         this.secretKey = request.getParameter("secret_key");
     }

@@ -16,9 +16,9 @@ import java.net.http.HttpRequest;
  * buildDetails 메소드에 우리가 직접 만든 FormWebAuthenticationDetails 클래스 객체로 반환한다.
  */
 @Component
-public class FormAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> {
+public class CustomAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> {
     @Override
     public WebAuthenticationDetails buildDetails(HttpServletRequest context) {
-        return new FormWebAuthenticationDetails(context);
+        return new CustomWebAuthenticationDetails(context);
     }
 }
