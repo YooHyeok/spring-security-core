@@ -41,6 +41,5 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         } else {
             redirectStrategy.sendRedirect(request, response, getDefaultTargetUrl());
         }
-        super.onAuthenticationSuccess(request, response, authentication);
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
@@ -25,6 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    @Autowired
+    private AuthenticationFailureHandler customAuthenticationFailureHandler;
     @Autowired
     private AuthenticationDetailsSource authenticationDetailsSource;
     //실제 사용시 구현체 FormAuthenticationDetailsSource 객체 주입(반환타입만 인터페이스)
@@ -76,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http    //인가 정책 시작
                 .authorizeRequests()
                 // 각 사용자별 접근 페이지 각 경로별 권한 부여
-                .antMatchers("/", "/users").permitAll() // 루트, 회원가입 페이지 모든 사용자 인증 및 권한 오픈
+                .antMatchers("/", "/users", "/login*").permitAll() // 루트, 회원가입 페이지 모든 사용자 인증 및 권한 오픈
                 .antMatchers("/mypage").hasRole("USER")
                 .antMatchers("/messages").hasRole("MANAGER")
                 .antMatchers("/config").hasRole("ADMIN")
@@ -89,6 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/") //성공시 루트페이지로 이동
                 .authenticationDetailsSource(authenticationDetailsSource)//FormAuthenctiontionDetailsSource객체 주입
                 .successHandler(customAuthenticationSuccessHandler)
+                .failureHandler(customAuthenticationFailureHandler)
                 .permitAll();
 
     }
