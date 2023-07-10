@@ -17,11 +17,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private AuthenticationSuccessHandler customAuthenticationSuccessHandler;
     @Autowired
     private AuthenticationDetailsSource authenticationDetailsSource;
     //실제 사용시 구현체 FormAuthenticationDetailsSource 객체 주입(반환타입만 인터페이스)
@@ -85,6 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login_proc")// 로그인을 처리하는 컨트롤러 매핑주소
                 .defaultSuccessUrl("/") //성공시 루트페이지로 이동
                 .authenticationDetailsSource(authenticationDetailsSource)//FormAuthenctiontionDetailsSource객체 주입
+                .successHandler(customAuthenticationSuccessHandler)
                 .permitAll();
 
     }
