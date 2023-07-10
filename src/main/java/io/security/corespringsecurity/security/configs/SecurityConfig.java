@@ -1,6 +1,5 @@
 package io.security.corespringsecurity.security.configs;
 
-import io.security.corespringsecurity.security.common.FormAuthenticationDetailsSource;
 import io.security.corespringsecurity.security.provider.CustomAuthenticationProvider;
 import io.security.corespringsecurity.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
