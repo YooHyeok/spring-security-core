@@ -36,7 +36,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
         /**
          * Ajax통신이 아니면 Exception발생
          */
-        if (isAjax(request)) {
+        if (!isAjax(request)) {
             throw new IllegalStateException("Authentication is not supported");
         }
 
